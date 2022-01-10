@@ -9,6 +9,7 @@ public class Employee extends Person {
 
     private String registry_number = "NaN";
     private float salary;
+    private boolean overTimePayment;
 
     public Employee(String identity_no, String name, String registry_number){
         super(identity_no, name);
@@ -45,13 +46,14 @@ public class Employee extends Person {
     public boolean earnedHisSalary(){
         return true;
     }
-    public boolean overtimePayment(){
-        return true;
+    public void overtimePayment(boolean overTime){
+        this.overTimePayment = overTime;
     }
+
     public float paySalary(float salary) throws SalaryInitializationException, OvertimePaymentRequiredException {
-        if(this.earnedHisSalary() && !(this.overtimePayment())){
+        if(this.earnedHisSalary() && !(this.overTimePayment)){
             this.setSalary(salary);
-        }else if(this.overtimePayment()){
+        }else if(this.overTimePayment){
             throw new OvertimePaymentRequiredException(OvertimePaymentRequiredException.class.getSimpleName() + "\n");
         }
         return this.getSalary();
