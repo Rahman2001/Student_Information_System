@@ -19,10 +19,16 @@ public class Gardener extends MaintenanceStaff {
 
     public void addResponsibility(MaintenanceStaff maintenanceStaff, Location location){
         String maintenanceType = maintenanceStaff.getClass().getSimpleName();
+
         if(maintenanceType.equalsIgnoreCase(this.getClass().getSimpleName())){
-            super.addResponsibility(maintenanceStaff, location);
             this.takenAmountResponsibility++;
             this.takenAmountSpace += location.getSpace();
+
+            if((this.takenAmountResponsibility > minAmountResponsibility || takenAmountSpace > minAmountSpace * 2) // Overtime payment criteria
+                    && location.isProperlyMaintained()){
+                super.overtimePayment(true);
+            }
+            super.addResponsibility(maintenanceStaff, location);
         }else{
             System.out.println("Incorrect type of maintenance! (should be " + this.getClass().getSimpleName() + ")\n");
         }
