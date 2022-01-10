@@ -22,7 +22,7 @@ public class Gardener extends MaintenanceStaff {
         if(maintenanceType.equalsIgnoreCase(this.getClass().getSimpleName())){
             super.addResponsibility(maintenanceStaff, location);
             this.takenAmountResponsibility++;
-           // this.takenAmountSpace += location.getSpace();
+            this.takenAmountSpace += location.getSpace();
         }else{
             System.out.println("Incorrect type of maintenance! (should be " + this.getClass().getSimpleName() + ")\n");
         }
