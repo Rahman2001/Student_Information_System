@@ -15,21 +15,18 @@ public class CourseData {
     private TeachingStaff instructor;
     private List<AssistingStaff> assistants = new ArrayList<>();
     private static final Set<Student> students = new HashSet<>();
-    private  Set<CourseData> courseDataSet = new HashSet<>();
     private static final HashMap<Student, Set<CourseData>> hashMap = new HashMap<>();
 
     public CourseData(String code, String name, int credit) {
         this.code = code;
         this.name = name;
         this.credit = credit;
-        courseDataSet.add(this);
     }
     public CourseData(String code, String name, int credit, TeachingStaff instructor ){
         this.code = code;
         this.name = name;
         this.credit = credit;
         this.instructor = instructor;
-        this.courseDataSet.add(this);
     }
     public CourseData(String code, String name, int credit, TeachingStaff instructor, AssistingStaff assistant){
         this.code = code;
@@ -37,7 +34,6 @@ public class CourseData {
         this.credit = credit;
         this.instructor = instructor;
         this.assistants.add(assistant);
-        this.courseDataSet.add(this);
     }
     public CourseData(String code, String name, int credit, TeachingStaff instructor, List<AssistingStaff> assistants){
         this.code = code;
@@ -45,7 +41,6 @@ public class CourseData {
         this.credit = credit;
         this.instructor = instructor;
         this.assistants = assistants;
-        this.courseDataSet.add(this);
     }
 
     public CourseData(){}
@@ -128,7 +123,9 @@ public class CourseData {
             tempSet.add(this); // adds the course to the student's course data set
             hashMap.replace(student, tempSet); //replaces old course data with updated one
         }else {
-            hashMap.put(student, this.courseDataSet); // adds the new student to the hashmap with this course
+            Set<CourseData> courseDataSet = new HashSet<>();
+            courseDataSet.add(this);
+            hashMap.put(student, courseDataSet); // adds the new student to the hashmap with this course
             students.add(student); //adds to the set of students
         }
     }
