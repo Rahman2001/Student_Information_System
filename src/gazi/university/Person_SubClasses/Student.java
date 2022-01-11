@@ -50,8 +50,8 @@ public class Student {
         }
     }
 
-    public Year getEnrollmentYear() {
-        return this.enrollmentYear;
+    public int getEnrollmentYear() {
+        return this.enrollmentYear.getValue();
     }
 
     public void setEnrollmentYear(int enrollmentYear2) throws EnrollmentYearException {
