@@ -62,6 +62,13 @@ public class CourseData {
             return this.grade;
         }
     }
+    public double getGradeForList(){
+        if(this.grade == 0){
+            return 0;
+        }else{
+            return this.grade;
+        }
+    }
 
     private void setGrade(double grade){ // we made this method private because we set a grade according to student value
         this.grade = grade;
@@ -142,20 +149,22 @@ public class CourseData {
         Set<Student> studentList = new HashSet<>();
         for (Student student : students) {
             Set<CourseData> courseDataSet = hashMap.get(student); // get list of course data of the student
+            for(CourseData courseData : courseDataSet){
+                if(courseData.getCode().equalsIgnoreCase(this.getCode())
+                        && courseData.getName().equalsIgnoreCase(this.getName())) {
+                    try {
+                        double grade = courseData.getGrade();
+                        boolean isPassed = grade >= this.getGradeCriteria();
+                        if (isPassed) {
+                            studentList.add(student);
+                        }
 
-            boolean isPassed = courseDataSet.stream().findAny().filter(x -> {
-                try {
-                    return x.getCode().equals(this.getCode()) &&
-                            x.getName().equals(this.getName()) && x.getGrade() >= this.getGradeCriteria();
-                } catch (MissingGradeException e) {
-                    e.printStackTrace();
+                    } catch (MissingGradeException ex) {
+                        ex.printStackTrace();
+                    }
                 }
-                return false;
-            }).isPresent();
-
-            if (isPassed) {
-                studentList.add(student);
             }
+
         }
         return studentList;
     }

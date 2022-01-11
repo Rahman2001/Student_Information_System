@@ -4,6 +4,7 @@ import gazi.university.UMS.Student_Affairs_Exception.CourseTypeAndStudentTypeInc
 import gazi.university.UMS.Parameter_Mismatch_Exception.Date_Exception.EnrollmentYearException;
 import gazi.university.UMS.Parameter_Mismatch_Exception.String_Length_Mismatch_Exception.StudentIDLengthMismatchException;
 
+import java.time.LocalDate;
 import java.time.Year;
 import java.util.*;
 
@@ -17,10 +18,10 @@ public class Student {
     private final HashMap<Integer, Set<CourseData>> transcript = new HashMap<>();
     private Set<CourseData> currentCourses = new HashSet<>();
 
-    public Student(String student_number, Year enrollment_year) {
+    public Student(String student_number, int enrollment_year) {
         super();
         this.studentNumber = student_number;
-        this.enrollmentYear = enrollment_year;
+        this.enrollmentYear = Year.of(enrollment_year);
     }
 
     public Student(String student_number, Year enrollmentYear, int semester, Set<CourseData> pastCourses) {
@@ -121,7 +122,7 @@ public class Student {
         int totalPassed = 0;
         for (int pastSem : this.pastSemesters) {
             Set<CourseData> courseData = this.transcript.get(pastSem); // gets list of past courses from transcript
-            totalPassed += courseData.stream().filter(x -> x.getGrade() >= this.getGradeCriteria())
+            totalPassed += courseData.stream().filter(x -> x.getGradeForList() >= this.getGradeCriteria())
                     .mapToInt(CourseData::getCredit).sum(); //sums up all credits matching the criteria
         }
         return totalPassed;
@@ -134,8 +135,8 @@ public class Student {
     public boolean checkGraduation() {
         int lastSem = this.pastSemesters.get(this.pastSemesters.size() - 1);
         Set<CourseData> courseDataOfPrevSem = this.transcript.get(lastSem);
-        double[] prevGradesArray = courseDataOfPrevSem.stream().mapToDouble(CourseData::getGrade).toArray();
-        double[] currentGradesArray = this.currentCourses.stream().mapToDouble(CourseData::getGrade).toArray();
+        double[] prevGradesArray = courseDataOfPrevSem.stream().mapToDouble(CourseData::getGradeForList).toArray();
+        double[] currentGradesArray = this.currentCourses.stream().mapToDouble(CourseData::getGradeForList).toArray();
         int[] prevCreditsArray = courseDataOfPrevSem.stream().mapToInt(CourseData::getCredit).toArray();
         int[] currentCreditsArray = this.currentCourses.stream().mapToInt(CourseData::getCredit).toArray();
         double firstSemGPA = 0;
@@ -191,12 +192,12 @@ public class Student {
 
     public boolean checkPassedCourseByName(String name) { // checks if a student passed a particular course or not by searching its name
         double gradeOfCourse = this.currentCourses.stream().filter(x -> x.getName()
-                .equalsIgnoreCase(name)).findAny().get().getGrade(); // gets the grade of that course from list of current courses
+                .equalsIgnoreCase(name)).findAny().get().getGradeForList(); // gets the grade of that course from list of current courses
         boolean satisfiedCriteria = gradeOfCourse >= this.getGradeCriteria(); // criteria to return true
         if (gradeOfCourse == 0 && !satisfiedCriteria) {
             for (int prevSem : this.pastSemesters) {
                 gradeOfCourse = this.transcript.get(prevSem).stream().filter(x -> x.getName()
-                        .equalsIgnoreCase(name)).findAny().get().getGrade(); // searches that course in transcript and if found gets the grade
+                        .equalsIgnoreCase(name)).findAny().get().getGradeForList(); // searches that course in transcript and if found gets the grade
                 satisfiedCriteria = gradeOfCourse >= this.getGradeCriteria();
                 if (gradeOfCourse != 0 && satisfiedCriteria) {
                     return true;
@@ -208,12 +209,12 @@ public class Student {
 
     public boolean checkPassedCourseByCode(String code) { // checks if the student passed particular course or not by searching its code
         double gradeOfCourse = this.currentCourses.stream().filter(x -> x.getCode()
-                .equalsIgnoreCase(code)).findAny().get().getGrade(); // gets the grade of that course from list of current courses
+                .equalsIgnoreCase(code)).findAny().get().getGradeForList(); // gets the grade of that course from list of current courses
         boolean satisfiedCriteria = gradeOfCourse >= this.getGradeCriteria(); // criteria to return true
         if (gradeOfCourse == 0 && !satisfiedCriteria) {
             for (int prevSem : this.pastSemesters) {
                 gradeOfCourse = this.transcript.get(prevSem).stream().filter(x -> x.getCode()
-                        .equalsIgnoreCase(code)).findAny().get().getGrade(); // searches that course in transcript and if found gets the grade
+                        .equalsIgnoreCase(code)).findAny().get().getGradeForList(); // searches that course in transcript and if found gets the grade
                 satisfiedCriteria = gradeOfCourse >= this.getGradeCriteria();
                 if (gradeOfCourse != 0 && satisfiedCriteria) {
                     return true;
