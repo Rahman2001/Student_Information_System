@@ -55,7 +55,7 @@ public class CourseData {
     public double getGrade() throws MissingGradeException {
         if(this.grade == 0.0){
             throw new MissingGradeException(MissingGradeException.class.getSimpleName() +
-                    "\nThere is a missing grade in " + this.getName() + " course!\n");
+                    "\n\nThere is a missing grade in " + this.getName() + " course!\n");
         }else{
             return this.grade;
         }
@@ -88,7 +88,7 @@ public class CourseData {
             hashMap.replace(student, courseDataSet); // we update the hashmap by adding the updated list
         }
         else {
-            System.out.println("There is no course data in the list!\n");
+            System.out.println("\nThere is no course data in the list!\n");
         }
     }
 
@@ -169,6 +169,14 @@ public class CourseData {
                 }
             }
         return studentList;
+    }
+
+    public Set<CourseData> getCourseOfStudent(Student student){
+        if(hashMap.containsKey(student) && !hashMap.get(student).isEmpty()){
+            return hashMap.get(student);
+        }else{
+            return null;
+        }
     }
 
     @Override

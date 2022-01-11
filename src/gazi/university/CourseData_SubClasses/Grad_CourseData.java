@@ -5,6 +5,7 @@ import gazi.university.Person_SubClasses.Employee_SubClasses.Academics_SubClasse
 import gazi.university.Person_SubClasses.Employee_SubClasses.Academics_SubClasses.TeachingStaff;
 import gazi.university.Person_SubClasses.Student;
 import gazi.university.Person_SubClasses.Student_SubClasses.Grad_Student;
+import gazi.university.Person_SubClasses.Student_SubClasses.Grad_Student_SubClasses.Msc_Student;
 
 import java.util.List;
 import java.util.Set;
@@ -30,7 +31,8 @@ public class Grad_CourseData extends CourseData {
 
     @Override
     public void enrollStudent(Student student) {
-        if (student.getClass().getSimpleName().equals(Grad_Student.class.getSimpleName())) {
+        if (student.getClass().getSimpleName().equals(Grad_Student.class.getSimpleName())
+                || student.getClass().getPackageName().equalsIgnoreCase(Msc_Student.class.getPackageName())) {
             super.enrollStudent(student);
         } else {
             System.out.println("You cannot enroll this student to graduate course because " +

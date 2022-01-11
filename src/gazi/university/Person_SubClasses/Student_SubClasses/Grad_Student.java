@@ -7,7 +7,7 @@ import gazi.university.Person_SubClasses.Student;
 import java.time.Year;
 import java.util.Set;
 
-public class Grad_Student  extends Student {
+public abstract class Grad_Student  extends Student {
     private static final double gradeCriteria = 2.0;
     private static final int totalPassedCredits = 120;
 
