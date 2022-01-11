@@ -31,19 +31,19 @@ public class Msc_Student extends Grad_Student {
     @Override
     public boolean checkGraduation() {
         boolean isTrue = super.checkGraduation();
-        String thesisCourse = super.getCurrentCourses().stream().findAny()
+        String thesisCourse = super.getCurrentCourses().stream()
                 .filter(x -> x.getName().equalsIgnoreCase("MSCThesis") && x.getCode()
-                        .equalsIgnoreCase("T600") && x.getGradeForList() >= gradeCriteria).get().toString();
+                        .equalsIgnoreCase("T600") && x.getGradeForList() >= gradeCriteria).findAny().toString();
 
         if (thesisCourse == null && isTrue) { // if that course data doesn't exist in current courses then it looks for in transcript
             Collection<Set<CourseData>> transcript = super.getPastCoursesOfSemester().values();
 
             for (Set<CourseData> courseData : transcript) { // goes through all the course data to find the particular one
 
-                thesisCourse = courseData.stream().findAny().filter(x -> x.getName()
+                thesisCourse = courseData.stream().filter(x -> x.getName()
                         .equalsIgnoreCase("MSCThesis") && x.getCode()
                         .equalsIgnoreCase("T600") &&
-                        x.getGradeForList() >= gradeCriteria).get().toString(); // finds that course data we need
+                        x.getGradeForList() >= gradeCriteria).findAny().toString(); // finds that course data we need
 
                 return thesisCourse != null; // if such course exists with passed grade then return true
             }

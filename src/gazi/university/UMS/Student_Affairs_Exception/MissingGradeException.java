@@ -1,6 +1,7 @@
 package gazi.university.UMS.Student_Affairs_Exception;
 
 import gazi.university.Person_SubClasses.Employee_SubClasses.AdministrativeStaff;
+import gazi.university.Person_SubClasses.Student;
 
 public class MissingGradeException extends Exception{
     public MissingGradeException(String message){

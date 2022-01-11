@@ -11,12 +11,12 @@ public class CourseData {
     private String code = "NaN";
     private String name = "NaN";
     private int credit = 0;
-    private double grade;
-    private double criteria;
+    private double grade = 0;
+    private double criteria = 2.0;
     private TeachingStaff instructor;
     private List<AssistingStaff> assistants = new ArrayList<>();
     private static final Set<Student> students = new HashSet<>();
-    private static final HashMap<Student, Set<CourseData>> hashMap = new HashMap<>();
+    private static HashMap<Student, Set<CourseData>> hashMap = new HashMap<>();
 
     public CourseData(String code, String name, int credit) {
         this.code = code;
@@ -55,9 +55,9 @@ public class CourseData {
     }
 
     public double getGrade() throws MissingGradeException {
-        if(this.grade == 0){
+        if(this.grade == 0.0){
             throw new MissingGradeException(MissingGradeException.class.getSimpleName() +
-                    "\nThere is a missing grade in this course!\n");
+                    "\nThere is a missing grade in " + this.getName() + " course!\n");
         }else{
             return this.grade;
         }
@@ -70,22 +70,28 @@ public class CourseData {
         }
     }
 
-    private void setGrade(double grade){ // we made this method private because we set a grade according to student value
+    public void setGrade(double grade){ // we made this method private because we set a grade according to student value
         this.grade = grade;
     }
 
-    public void setGradeOfStudent( Student student, float grade){
+    public void setGradeOfStudent( Student student, double grade){
         Set<CourseData> courseDataSet = hashMap.get(student);// gets list of course data of a particular student
         if(courseDataSet != null){
-            CourseData temp = courseDataSet.stream().findAny().filter(x -> x.getCode()
+            Optional<CourseData> temp = courseDataSet.stream().filter(x -> x.getCode()
                     .equalsIgnoreCase(this.getCode()) && x.getName()
-                    .equalsIgnoreCase(this.getName())).get(); // gets particular course data
-            courseDataSet.remove(temp); //removes that course data from the set
-            temp.setGrade(grade);
-            courseDataSet.add(temp); //adds updated course data into the set
+                    .equalsIgnoreCase(this.getName())).findAny();// gets particular course data
+            if(temp.isPresent()) {
+                CourseData courseData = new CourseData(temp.get().getCode(), temp.get().getName(), temp.get().getCredit()); // We create new CourseData object to get new address of the same object
+                courseDataSet.remove(temp.get()); //removes the old address of course data from the set
+                courseData.setGrade(grade); // sets the grade to new address of course data
+                courseDataSet.add(courseData); //adds new address of course data into the set
+            }
+
             hashMap.replace(student, courseDataSet); // we update the hashmap by adding the updated list
         }
-        System.out.println("There is no course data in the list!\n");
+        else {
+            System.out.println("There is no course data in the list!\n");
+        }
     }
 
     public int getCredit() {
@@ -131,41 +137,39 @@ public class CourseData {
             hashMap.replace(student, tempSet); //replaces old course data with updated one
         }else {
             Set<CourseData> courseDataSet = new HashSet<>();
-            courseDataSet.add(this);
+            CourseData courseData = new CourseData(this.getCode(), this.getName(), this.getCredit());
+            courseDataSet.add(courseData);
             hashMap.put(student, courseDataSet); // adds the new student to the hashmap with this course
             students.add(student); //adds to the set of students
         }
     }
 
     protected  void setGradeCriteria(double criteria2){
-        criteria = criteria2;
+        this.criteria = criteria2;
     }
 
     protected double getGradeCriteria(){
-        return criteria;
+        return this.criteria;
     }
 
     public Set<Student> getPassedStudents(){
         Set<Student> studentList = new HashSet<>();
         for (Student student : students) {
             Set<CourseData> courseDataSet = hashMap.get(student); // get list of course data of the student
-            for(CourseData courseData : courseDataSet){
-                if(courseData.getCode().equalsIgnoreCase(this.getCode())
-                        && courseData.getName().equalsIgnoreCase(this.getName())) {
+            Optional<CourseData> temp = courseDataSet.stream().filter(x -> x.getCode().equalsIgnoreCase(this.getCode())
+                    && x.getName().equalsIgnoreCase(this.getName())).findAny(); //tries to get particular course data
+                if(temp.isPresent()){ // if such course exists then assign it to the courseData object next
                     try {
-                        double grade = courseData.getGrade();
+                        double grade = temp.get().getGrade();
                         boolean isPassed = grade >= this.getGradeCriteria();
                         if (isPassed) {
                             studentList.add(student);
                         }
-
                     } catch (MissingGradeException ex) {
                         ex.printStackTrace();
                     }
                 }
             }
-
-        }
         return studentList;
     }
 

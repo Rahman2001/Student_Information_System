@@ -11,7 +11,7 @@ public class Undergrad_Student extends Student {
     private static final double gradeCriteria = 2.0;
     private static final int totalPassedCreditsCriteria = 100;
 
-    public Undergrad_Student(String student_number, Year enrollment_year) {
+    public Undergrad_Student(String student_number, int enrollment_year) {
         super(student_number, enrollment_year);
         super.setGradeCriteria(gradeCriteria);
         super.setTotalPassedCreditsCriteria(totalPassedCreditsCriteria);

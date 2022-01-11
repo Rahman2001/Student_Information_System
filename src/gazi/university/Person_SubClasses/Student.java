@@ -12,8 +12,8 @@ public class Student {
     private String studentNumber = "NaN";
     private String studentName = "NaN";
     private Year enrollmentYear;
-    private double gradeCriteria;
-    private int totalPassedCreditsCriteria;
+    private static double gradeCriteria;
+    private static int totalPassedCreditsCriteria;
     private List<Integer> pastSemesters = new ArrayList<>();
     private final HashMap<Integer, Set<CourseData>> transcript = new HashMap<>();
     private Set<CourseData> currentCourses = new HashSet<>();
@@ -67,19 +67,19 @@ public class Student {
     }
 
     protected double getGradeCriteria() {
-        return this.gradeCriteria;
+        return gradeCriteria;
     }
 
-    protected void setGradeCriteria(double gradeCriteria) {
-        this.gradeCriteria = gradeCriteria;
+    protected void setGradeCriteria(double gradeCriteria2) {
+        gradeCriteria = gradeCriteria2;
     }
 
     protected int getTotalPassedCreditsCriteria() {
-        return this.totalPassedCreditsCriteria;
+        return totalPassedCreditsCriteria;
     }
 
-    protected void setTotalPassedCreditsCriteria(int totalPassedCreditsCriteria) {
-        this.totalPassedCreditsCriteria = totalPassedCreditsCriteria;
+    protected void setTotalPassedCreditsCriteria(int totalPassedCreditsCriteria2) {
+        totalPassedCreditsCriteria = totalPassedCreditsCriteria2;
     }
 
     public Set<CourseData> getCurrentCourses() { //gives course data to a user
@@ -222,5 +222,8 @@ public class Student {
             }
         }
         return satisfiedCriteria;
+    }
+    public String toString(){
+        return this.getStudentName() + " " + this.getNumber() + " " + this.getEnrollmentYear();
     }
 }

@@ -27,13 +27,13 @@ class PhD_Student extends Grad_Student {
     @Override
     public boolean checkGraduation() {
         boolean isTrue = super.checkGraduation();
-        String thesisCourse = super.getCurrentCourses().stream().findAny()
+        String thesisCourse = super.getCurrentCourses().stream()
                 .filter(x -> x.getName().equalsIgnoreCase("MSCThesis") && x.getCode()
-                        .equalsIgnoreCase("T600") && x.getGradeForList() >= gradeCriteria).get().toString();
+                        .equalsIgnoreCase("T600") && x.getGradeForList() >= gradeCriteria).findAny().toString();
 
-        String proficiencyCourse = super.getCurrentCourses().stream().findAny().filter(y -> y.getName()
+        String proficiencyCourse = super.getCurrentCourses().stream().filter(y -> y.getName()
                 .equalsIgnoreCase("Proficiency") && y.getCode()
-                .equalsIgnoreCase("P700") && y.getGradeForList() >= gradeCriteria).get().toString();
+                .equalsIgnoreCase("P700") && y.getGradeForList() >= gradeCriteria).findAny().toString();
 
         if (thesisCourse == null || proficiencyCourse == null && isTrue) {
             Collection<Set<CourseData>> transcript = super.getPastCoursesOfSemester().values();
@@ -41,10 +41,10 @@ class PhD_Student extends Grad_Student {
             if (thesisCourse == null) {
                 for (Set<CourseData> courseData : transcript) {
 
-                    thesisCourse = courseData.stream().findAny().filter(x -> x.getName()
+                    thesisCourse = courseData.stream().filter(x -> x.getName()
                             .equalsIgnoreCase("PHDThesis") && x.getCode()
                             .equalsIgnoreCase("T700") &&
-                            x.getGradeForList() >= gradeCriteria).get().toString();
+                            x.getGradeForList() >= gradeCriteria).findAny().toString();
                     if (thesisCourse != null) {
                         break;
                     }
@@ -53,10 +53,10 @@ class PhD_Student extends Grad_Student {
             if (proficiencyCourse == null) {
                 for (Set<CourseData> courseData : transcript) {
 
-                    proficiencyCourse = courseData.stream().findAny().filter(x -> x.getName()
+                    proficiencyCourse = courseData.stream().filter(x -> x.getName()
                             .equalsIgnoreCase("Proficiency") && x.getCode()
                             .equalsIgnoreCase("P700") &&
-                            x.getGradeForList() >= gradeCriteria).get().toString();
+                            x.getGradeForList() >= gradeCriteria).findAny().toString();
                     if (proficiencyCourse != null) {
                         break;
                     }
@@ -92,9 +92,9 @@ class PhD_Student extends Grad_Student {
                 if (!isPassed) {
                     Collection<Set<CourseData>> courseDataLists = super.getPastCoursesOfSemester().values();
                     for (Set<CourseData> temp : courseDataLists) {
-                        isPassed = temp.stream().findAny().filter(y -> y.getName()
+                        isPassed = temp.stream().anyMatch(y -> y.getName()
                                 .equalsIgnoreCase("PhdThesis") && y.getCode()
-                                .equalsIgnoreCase("P700") && y.getGradeForList() >= gradeCriteria).isPresent();
+                                .equalsIgnoreCase("P700") && y.getGradeForList() >= gradeCriteria);
                         if (isPassed) {
                             super.addCourse(courseData);
                             break;
