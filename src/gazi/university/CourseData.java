@@ -3,6 +3,7 @@ package gazi.university;
 import gazi.university.Person_SubClasses.Employee_SubClasses.Academics_SubClasses.AssistingStaff;
 import gazi.university.Person_SubClasses.Employee_SubClasses.Academics_SubClasses.TeachingStaff;
 import gazi.university.Person_SubClasses.Student;
+import gazi.university.UMS.Student_Affairs_Exception.MissingGradeException;
 
 import java.util.*;
 
@@ -53,13 +54,12 @@ public class CourseData {
         this.name = name;
     }
 
-    public double getGrade() {
-        try {
+    public double getGrade() throws MissingGradeException {
+        if(this.grade == 0){
+            throw new MissingGradeException(MissingGradeException.class.getSimpleName() +
+                    "\nThere is a missing grade in this course!\n");
+        }else{
             return this.grade;
-        } catch (NullPointerException ex) {
-            Scanner input = new Scanner(System.in);
-            System.out.println("There is a missing grade in this course!");
-            return 0;
         }
     }
 
@@ -143,8 +143,15 @@ public class CourseData {
         for (Student student : students) {
             Set<CourseData> courseDataSet = hashMap.get(student); // get list of course data of the student
 
-            boolean isPassed = courseDataSet.stream().findAny().filter(x -> x.getCode().equals(this.getCode()) &&
-                    x.getName().equals(this.getName()) && x.getGrade() >= this.getGradeCriteria()).isPresent();
+            boolean isPassed = courseDataSet.stream().findAny().filter(x -> {
+                try {
+                    return x.getCode().equals(this.getCode()) &&
+                            x.getName().equals(this.getName()) && x.getGrade() >= this.getGradeCriteria();
+                } catch (MissingGradeException e) {
+                    e.printStackTrace();
+                }
+                return false;
+            }).isPresent();
 
             if (isPassed) {
                 studentList.add(student);

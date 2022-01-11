@@ -8,8 +8,8 @@ import java.util.List;
 public class AdministrativeStaff extends Employee {
     private static final int minAmountOperation = 10;
     private static final int maxAmountError = (minAmountOperation * 10) / 100;
-    private List<String> performedOperations = new ArrayList<>();
-    private List<String> error = new ArrayList<>();
+    private static final List<String> performedOperations = new ArrayList<>();
+    private static final List<String> error = new ArrayList<>();
 
     public AdministrativeStaff(String identity_no, String name, String registry_number){
         super(identity_no, name, registry_number);
@@ -19,26 +19,18 @@ public class AdministrativeStaff extends Employee {
         return performedOperations;
     }
 
-    public void setPerformedOperations(List<String> performedOperations) {
-        this.performedOperations = performedOperations;
-    }
-
-    public List<String> getError() {
+    public List<String> getErrorList() {
         return error;
     }
 
-    public void setError(List<String> error) {
-        this.error = error;
-    }
-
     public void addPerformedOperation(String operationDescription){
-        this.performedOperations.add(operationDescription);
+        performedOperations.add(operationDescription);
     }
     public void addError(String errorDescription){
-        this.error.add(errorDescription);
+        error.add(errorDescription);
     }
     public boolean earnedHisSalary(){
-        int errorRate = (this.error.size() * 100) / this.performedOperations.size();
+        int errorRate = (error.size() * 100) / performedOperations.size();
         return performedOperations.size() >= 10 && errorRate < maxAmountError;
     }
 }

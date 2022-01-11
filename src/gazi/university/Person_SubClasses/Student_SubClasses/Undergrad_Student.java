@@ -1,7 +1,7 @@
 package gazi.university.Person_SubClasses.Student_SubClasses;
 import gazi.university.CourseData;
 import gazi.university.CourseData_SubClasses.Undergrad_CourseData;
-import gazi.university.CourseTypeAndStudentTypeInconsistencyException;
+import gazi.university.UMS.Student_Affairs_Exception.CourseTypeAndStudentTypeInconsistencyException;
 import gazi.university.Person_SubClasses.Student;
 
 import java.time.Year;

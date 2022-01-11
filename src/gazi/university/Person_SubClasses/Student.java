@@ -1,8 +1,8 @@
 package gazi.university.Person_SubClasses;
 import gazi.university.CourseData;
-import gazi.university.CourseTypeAndStudentTypeInconsistencyException;
-import gazi.university.EnrollmentYearException;
-import gazi.university.StudentIDLengthMismatchException;
+import gazi.university.UMS.Student_Affairs_Exception.CourseTypeAndStudentTypeInconsistencyException;
+import gazi.university.UMS.Parameter_Mismatch_Exception.Date_Exception.EnrollmentYearException;
+import gazi.university.UMS.Parameter_Mismatch_Exception.String_Length_Mismatch_Exception.StudentIDLengthMismatchException;
 
 import java.time.Year;
 import java.util.*;

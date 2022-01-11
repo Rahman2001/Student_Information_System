@@ -1,12 +1,11 @@
 package gazi.university.Person_SubClasses.Student_SubClasses.Grad_Student_SubClasses;
 
 import gazi.university.CourseData;
-import gazi.university.CourseTypeAndStudentTypeInconsistencyException;
+import gazi.university.UMS.Student_Affairs_Exception.CourseTypeAndStudentTypeInconsistencyException;
 import gazi.university.Person_SubClasses.Student_SubClasses.Grad_Student;
 
 import java.time.Year;
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 class PhD_Student extends Grad_Student {

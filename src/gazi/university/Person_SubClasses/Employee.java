@@ -1,9 +1,10 @@
 package gazi.university.Person_SubClasses;
 
-import gazi.university.OvertimePaymentRequiredException;
-import gazi.university.Person;
-import gazi.university.RegistryNumberLengthMismatchException;
-import gazi.university.SalaryInitializationException;
+import gazi.university.*;
+import gazi.university.UMS.Accounting_Exception.Pay_Salary_Exception.OvertimePaymentRequiredException;
+import gazi.university.UMS.Accounting_Exception.Pay_Salary_Exception.SalaryCannotBePaidException;
+import gazi.university.UMS.Accounting_Exception.SalaryInitializationException;
+import gazi.university.UMS.Parameter_Mismatch_Exception.String_Length_Mismatch_Exception.RegistryNumberLengthMismatchException;
 
 public class Employee extends Person {
 
@@ -15,7 +16,6 @@ public class Employee extends Person {
         super(identity_no, name);
         this.registry_number = registry_number;
     }
-
 
     public String getRegistryNumber() {
         return registry_number;
@@ -50,10 +50,12 @@ public class Employee extends Person {
         this.overTimePayment = overTime;
     }
 
-    public float paySalary(float salary) throws SalaryInitializationException, OvertimePaymentRequiredException {
-        if(this.earnedHisSalary() && !(this.overTimePayment)){
+    public float paySalary(float salary) throws SalaryInitializationException, OvertimePaymentRequiredException, SalaryCannotBePaidException {
+        if(!this.earnedHisSalary()){
+            throw new SalaryInitializationException(SalaryCannotBePaidException.class.getSimpleName() + "\n");
+        }else if(this.earnedHisSalary() && !(this.overTimePayment)){
             this.setSalary(salary);
-        }else if(this.overTimePayment){
+        }else if(this.earnedHisSalary() && this.overTimePayment){
             throw new OvertimePaymentRequiredException(OvertimePaymentRequiredException.class.getSimpleName() + "\n");
         }
         return this.getSalary();
