@@ -16,7 +16,7 @@ public class CourseData {
     private TeachingStaff instructor;
     private List<AssistingStaff> assistants = new ArrayList<>();
     private static final Set<Student> students = new HashSet<>();
-    private static HashMap<Student, Set<CourseData>> hashMap = new HashMap<>();
+    private static final HashMap<Student, Set<CourseData>> hashMap = new HashMap<>();
 
     public CourseData(String code, String name, int credit) {
         this.code = code;
