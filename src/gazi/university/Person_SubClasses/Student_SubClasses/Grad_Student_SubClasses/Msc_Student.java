@@ -36,7 +36,7 @@ public class Msc_Student extends Grad_Student {
                         .equalsIgnoreCase("T600") && x.getGradeForList() >= gradeCriteria).findAny().toString();
 
         if (thesisCourse == null && isTrue) { // if that course data doesn't exist in current courses then it looks for in transcript
-            Collection<Set<CourseData>> transcript = super.getPastCoursesOfSemester().values();
+            Collection<Set<CourseData>> transcript = super.getTranscript().values();
 
             for (Set<CourseData> courseData : transcript) { // goes through all the course data to find the particular one
 

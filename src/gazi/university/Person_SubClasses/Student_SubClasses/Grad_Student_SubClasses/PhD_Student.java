@@ -36,7 +36,7 @@ class PhD_Student extends Grad_Student {
                 .equalsIgnoreCase("P700") && y.getGradeForList() >= gradeCriteria).findAny().toString();
 
         if (thesisCourse == null || proficiencyCourse == null && isTrue) {
-            Collection<Set<CourseData>> transcript = super.getPastCoursesOfSemester().values();
+            Collection<Set<CourseData>> transcript = super.getTranscript().values();
 
             if (thesisCourse == null) {
                 for (Set<CourseData> courseData : transcript) {
@@ -90,7 +90,7 @@ class PhD_Student extends Grad_Student {
                         .equalsIgnoreCase("P700") && x.getGradeForList() >= gradeCriteria).isPresent();
 
                 if (!isPassed) {
-                    Collection<Set<CourseData>> courseDataLists = super.getPastCoursesOfSemester().values();
+                    Collection<Set<CourseData>> courseDataLists = super.getTranscript().values();
                     for (Set<CourseData> temp : courseDataLists) {
                         isPassed = temp.stream().anyMatch(y -> y.getName()
                                 .equalsIgnoreCase("PhdThesis") && y.getCode()

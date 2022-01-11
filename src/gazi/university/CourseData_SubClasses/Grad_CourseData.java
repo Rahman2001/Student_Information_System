@@ -8,7 +8,6 @@ import gazi.university.Person_SubClasses.Student_SubClasses.Grad_Student;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class Grad_CourseData extends CourseData {
     private static final double gradeCriteria = 2.0;

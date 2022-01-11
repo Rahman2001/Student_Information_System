@@ -4,7 +4,6 @@ import gazi.university.UMS.Student_Affairs_Exception.CourseTypeAndStudentTypeInc
 import gazi.university.UMS.Parameter_Mismatch_Exception.Date_Exception.EnrollmentYearException;
 import gazi.university.UMS.Parameter_Mismatch_Exception.String_Length_Mismatch_Exception.StudentIDLengthMismatchException;
 
-import java.time.LocalDate;
 import java.time.Year;
 import java.util.*;
 
@@ -58,7 +57,8 @@ public class Student {
         return this.enrollmentYear;
     }
 
-    public void setEnrollmentYear(Year enrollmentYear) throws EnrollmentYearException {
+    public void setEnrollmentYear(int enrollmentYear2) throws EnrollmentYearException {
+        Year enrollmentYear = Year.of(enrollmentYear2); //Converts the input into a year data type
         if (enrollmentYear.isBefore(Year.of(2000)) || enrollmentYear.isAfter(Year.now())) {
             throw new EnrollmentYearException(EnrollmentYearException.class.getSimpleName());
         } else {
@@ -90,11 +90,11 @@ public class Student {
         this.currentCourses = currentCourses;
     }
 
-    protected HashMap<Integer, Set<CourseData>> getPastCoursesOfSemester() {
+    public HashMap<Integer, Set<CourseData>> getTranscript() {
         return this.transcript;
     }
 
-    public void setPastCoursesOfSemester(int semester, Set<CourseData> pastCourseList) {
+    public void setTranscriptOfSemester(int semester, Set<CourseData> pastCourseList) {
         pastSemesters.add(semester);
         transcript.put(semester, pastCourseList);
     }
