@@ -17,8 +17,8 @@ public class Main {
         Rahman.setStudentName("Rahman");
         Undergrad_Student Rahym = new Undergrad_Student("1918024021", 2020);
         Rahym.setStudentName("Rahym");
-        CourseData courseData1 = new CourseData("BM221", "Elektrik.Dev.", 4);
-        CourseData courseData2 = new CourseData("MATH213", "Diff.Eq.", 10);
+        Undergrad_CourseData courseData1 = new Undergrad_CourseData("MATH213", "Diff.Eq.", 10);
+        Undergrad_CourseData courseData2 = new Undergrad_CourseData("BM312", "Elektrik.Dev.", 5);
 
         courseData1.enrollStudent(Rahman);
         courseData1.enrollStudent(Rahym);
