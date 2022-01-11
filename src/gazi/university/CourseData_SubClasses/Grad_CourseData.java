@@ -45,9 +45,6 @@ public class Grad_CourseData extends CourseData {
     @Override
     public Set<Student> getPassedStudents() {
         super.setGradeCriteria(gradeCriteria);
-        Set<Student> gradStudents = super.getPassedStudents();
-        gradStudents = gradStudents.stream().filter(x -> x.getClass().getSimpleName().equals(
-                Grad_Student.class.getSimpleName())).collect(Collectors.toSet());
-        return gradStudents;
+        return super.getPassedStudents();
     }
 }
