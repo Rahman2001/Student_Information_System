@@ -28,9 +28,6 @@ public class Grad_CourseData extends CourseData {
         super(code, name, credit, instructor, assistants);
     }
 
-    public Grad_CourseData() {
-    }
-
     @Override
     public void enrollStudent(Student student) {
         if (student.getClass().getSimpleName().equals(Grad_Student.class.getSimpleName())) {

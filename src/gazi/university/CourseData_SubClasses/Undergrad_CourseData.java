@@ -24,7 +24,6 @@ public class Undergrad_CourseData extends CourseData{
     public Undergrad_CourseData(String code, String name, int credit, TeachingStaff instructor, List<AssistingStaff> assistants){
         super(code, name, credit, instructor, assistants);
     }
-    public Undergrad_CourseData(){}
 
     @Override
     public void enrollStudent(Student student) {

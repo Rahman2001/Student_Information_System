@@ -30,9 +30,6 @@ public class Student {
         this.transcript.put(semester, pastCourses);
     }
 
-    public Student() {
-    }
-
     public String getStudentName() {
         return this.studentName;
     }

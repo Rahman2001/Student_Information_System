@@ -44,8 +44,6 @@ public class CourseData {
         this.assistants = assistants;
     }
 
-    public CourseData(){}
-
     public String getName() {
         return this.name;
     }
