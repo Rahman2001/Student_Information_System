@@ -3,7 +3,7 @@ package gazi.university.Person_SubClasses.Employee_SubClasses.Academics_SubClass
 import gazi.university.Location_SubClasses.Office;
 import gazi.university.Person_SubClasses.Employee_SubClasses.Academics;
 
-public class TeachingStaff extends Academics {
+public abstract class TeachingStaff extends Academics {
     private String officeHours ;
     private Office office;
 

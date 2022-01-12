@@ -26,7 +26,7 @@ public class Gardener extends MaintenanceStaff {
 
             if((this.takenAmountResponsibility > minAmountResponsibility || takenAmountSpace > minAmountSpace * 2) // Overtime payment criteria
                     && location.isProperlyMaintained()){
-                super.overtimePayment(true);
+                super.overtimePayment();
             }
             super.addResponsibility(maintenanceStaff, location);
         }else{

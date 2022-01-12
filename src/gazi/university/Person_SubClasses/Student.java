@@ -9,7 +9,7 @@ import gazi.university.UMS.Student_Affairs_Exception.MissingGradeException;
 import java.time.Year;
 import java.util.*;
 
-public class Student extends Person {
+public abstract class Student extends Person {
     private String studentNumber = "NaN";
     private String studentName = "NaN";
     private Year enrollmentYear;
@@ -90,7 +90,7 @@ public class Student extends Person {
     }
 
     public HashMap<Integer, Set<CourseData>> getTranscript() {
-        return this.transcript;
+        return new HashMap<>(this.transcript);
     }
 
     public void setTranscriptOfSemester(int semester, Set<CourseData> pastCourseList) {

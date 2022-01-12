@@ -6,11 +6,11 @@ import gazi.university.UMS.Accounting_Exception.Pay_Salary_Exception.SalaryCanno
 import gazi.university.UMS.Accounting_Exception.SalaryInitializationException;
 import gazi.university.UMS.Parameter_Mismatch_Exception.String_Length_Mismatch_Exception.RegistryNumberLengthMismatchException;
 
-public class Employee extends Person {
+public abstract class Employee extends Person {
 
     private String registry_number = "NaN";
     private float salary;
-    private boolean overTimePayment;
+    private boolean overTimePayment = false;
 
     public Employee(String identity_no, String name, String registry_number){
         super(identity_no, name);
@@ -46,13 +46,14 @@ public class Employee extends Person {
     public boolean earnedHisSalary(){
         return true;
     }
-    public void overtimePayment(boolean overTime){
-        this.overTimePayment = overTime;
-    }
+
+    protected void overtimePayment(){
+        this.overTimePayment = true;
+    } // only maintenance class call this method to make overtime return true
 
     public float paySalary(float salary) throws SalaryInitializationException, OvertimePaymentRequiredException, SalaryCannotBePaidException {
         if(!this.earnedHisSalary()){
-            throw new SalaryInitializationException(SalaryCannotBePaidException.class.getSimpleName() + "\n");
+            throw new SalaryCannotBePaidException(SalaryCannotBePaidException.class.getSimpleName() + "\n");
         }else if(this.earnedHisSalary() && !(this.overTimePayment)){
             this.setSalary(salary);
         }else if(this.earnedHisSalary() && this.overTimePayment){

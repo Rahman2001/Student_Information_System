@@ -25,7 +25,7 @@ public class CareTaker extends MaintenanceStaff{
             this.takenAmountSpace += location.getSpace();
             if((this.takenAmountResponsibility > 5 || this.takenAmountSpace > minIndoorSpace * 2) //Overtime payment criteria
                     && location.isProperlyMaintained()){
-                super.overtimePayment(true);
+                super.overtimePayment();
             }
             super.addResponsibility(maintenanceStaff, location);
         }else{

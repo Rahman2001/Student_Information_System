@@ -4,6 +4,7 @@ import gazi.university.CourseData_SubClasses.Grad_CourseData;
 import gazi.university.Person_SubClasses.Student_SubClasses.Grad_Student;
 
 import gazi.university.Person_SubClasses.Student_SubClasses.Grad_Student_SubClasses.Msc_Student;
+import gazi.university.Person_SubClasses.Student_SubClasses.Undergrad_Student;
 import gazi.university.UMS.Parameter_Mismatch_Exception.String_Length_Mismatch_Exception.PersonIDLengthMismatchException;
 import gazi.university.UMS.Parameter_Mismatch_Exception.String_Length_Mismatch_Exception.Person_Name_Length_Mismatch_Exception.PersonNameTooLongException;
 import gazi.university.UMS.Parameter_Mismatch_Exception.String_Length_Mismatch_Exception.Person_Name_Length_Mismatch_Exception.PersonNameTooShortException;
@@ -21,8 +22,8 @@ public class Main {
         Rahman.setStudentName("Rahman");
         Grad_Student Rahym = new Msc_Student("1918024021", 2020);
         Rahym.setStudentName("Rahym");
-        Grad_CourseData courseData1 = new Grad_CourseData("MATH213", "Diff.Eq.", 10);
-        Grad_CourseData courseData2 = new Grad_CourseData("BM312", "Elektrik.Dev.", 5);
+        CourseData courseData1 = new Grad_CourseData("MATH213", "Diff.Eq.", 10);
+        CourseData courseData2 = new Grad_CourseData("BM312", "Elektrik.Dev.", 5);
 
         courseData1.enrollStudent(Rahman);
         courseData1.enrollStudent(Rahym);
@@ -30,7 +31,7 @@ public class Main {
         courseData2.enrollStudent(Rahym);
 
         courseData1.setGradeOfStudent(Rahym, 2);
-        courseData2.setGradeOfStudent(Rahman, 2);
+        courseData2.setGradeOfStudent(Rahman, 2.5);
 
         System.out.println(courseData2.getPassedStudents().toString());
 
@@ -41,6 +42,7 @@ public class Main {
 
         //Testing2 by inserting second semester's transcript------------------------------------------------
         CourseData courseData3 = new Grad_CourseData("ENG211", "Academic English", 4);
+        courseData3.enrollStudent(Rahman);
         Set<CourseData> gradCourseSet2 = courseData3.getCourseOfStudent(Rahman);
 
         Rahman.setTranscriptOfSemester(2, gradCourseSet2);
@@ -48,11 +50,21 @@ public class Main {
 
         //Printing all data in transcript of a student----------------------------------------
         HashMap<Integer, Set<CourseData>> transcript = Rahman.getTranscript();
+        transcript.put(3, Set.of(new Grad_CourseData("MAT222", "Mathemitcics", 13)));
         for(Map.Entry map : transcript.entrySet()){
             System.out.println(map.getKey() + " " + map.getValue().toString());
         }
-        //--------------------------------------------------------------------------------------
+
+
         System.out.println("Passed Elektrik.Dev. course: " + Rahman.checkPassedCourseByName("Elektrik.Dev."));
         System.out.println("Passed credits: " + Rahman.getPassedCredits());
+        System.out.println("\n\n\n");
+        //--------------------------------------------------------------------------------------
+
+
+        //Testing3 of Employee classes---------------------------------------------------------
+
+
+        //-------------------------------------------------------------------------------------
     }
 }

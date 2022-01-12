@@ -1,13 +1,16 @@
 package gazi.university;
 
+import gazi.university.CourseData_SubClasses.Grad_CourseData;
+import gazi.university.CourseData_SubClasses.Undergrad_CourseData;
 import gazi.university.Person_SubClasses.Employee_SubClasses.Academics_SubClasses.AssistingStaff;
 import gazi.university.Person_SubClasses.Employee_SubClasses.Academics_SubClasses.TeachingStaff;
 import gazi.university.Person_SubClasses.Student;
+import gazi.university.Person_SubClasses.Student_SubClasses.Undergrad_Student;
 import gazi.university.UMS.Student_Affairs_Exception.MissingGradeException;
 
 import java.util.*;
 
-public class CourseData {
+public abstract class CourseData {
     private String code = "NaN";
     private String name = "NaN";
     private int credit = 0;
@@ -60,7 +63,7 @@ public class CourseData {
             return this.grade;
         }
     }
-    public double getGradeForList(){
+    public double getGradeForList(){ // we just created this method so that it could function in streaming of set without any exception throwing
         if(this.grade == 0){
             return 0;
         }else{
@@ -73,16 +76,22 @@ public class CourseData {
     }
 
     public void setGradeOfStudent( Student student, double grade){
+        String studentType = student.getStudentName();
         Set<CourseData> courseDataSet = hashMap.get(student);// gets list of course data of a particular student
         if(courseDataSet != null){
             Optional<CourseData> temp = courseDataSet.stream().filter(x -> x.getCode()
                     .equalsIgnoreCase(this.getCode()) && x.getName()
                     .equalsIgnoreCase(this.getName())).findAny();// gets particular course data
             if(temp.isPresent()) {
-                CourseData courseData = new CourseData(temp.get().getCode(), temp.get().getName(), temp.get().getCredit()); // We create new CourseData object to get new address of the same object
+                CourseData temp2;
+                if(studentType.startsWith(Undergrad_Student.class.getSimpleName())) { // if students type doesn't start with letter U... then it is Grad student
+                    temp2 = new Undergrad_CourseData(this.getCode(), this.getName(), this.getCredit()); // creates undergrad course object
+                }else{
+                    temp2 = new Grad_CourseData(this.getCode(), this.getName(), this.getCredit()); // creates grad course object
+                }
                 courseDataSet.remove(temp.get()); //removes the old address of course data from the set
-                courseData.setGrade(grade); // sets the grade to new address of course data
-                courseDataSet.add(courseData); //adds new address of course data into the set
+                temp2.setGrade(grade); // sets the grade to new address of course data
+                courseDataSet.add(temp2); //adds new address of course data into the set
             }
 
             hashMap.replace(student, courseDataSet); // we update the hashmap by adding the updated list
@@ -129,14 +138,27 @@ public class CourseData {
     }
 
     public void enrollStudent(Student student){
+        String studentType = student.getStudentName();
         if(hashMap.containsKey(student) && hashMap.get(student) != null){ // if there exists such a student then is also should be a course data list
-            Set<CourseData> tempSet = hashMap.get(student); // gets course data set of that student
-            tempSet.add(this); // adds the course to the student's course data set
+            // gets course data set of that student
+            Set<CourseData> tempSet = new HashSet<>(hashMap.get(student)); // we get new address of the same set of course data
+            CourseData temp;
+            if(studentType.startsWith(Undergrad_Student.class.getSimpleName())) { // if students type doesn't start with letter U... then it is Grad student
+                temp = new Undergrad_CourseData(this.getCode(), this.getName(), this.getCredit()); // creates undergrad course object
+            }else{
+                temp = new Grad_CourseData(this.getCode(), this.getName(), this.getCredit()); // creates grad course object
+            }
+            tempSet.add(temp); // adds the course to the student's course data set
             hashMap.replace(student, tempSet); //replaces old course data with updated one
         }else {
             Set<CourseData> courseDataSet = new HashSet<>();
-            CourseData courseData = new CourseData(this.getCode(), this.getName(), this.getCredit());
-            courseDataSet.add(courseData);
+            CourseData temp;
+            if(studentType.startsWith(Undergrad_Student.class.getSimpleName())) { // if students type doesn't start with letter U... then it is Grad student
+                temp = new Undergrad_CourseData(this.getCode(), this.getName(), this.getCredit()); // creates undergrad course object
+            }else{
+                temp = new Grad_CourseData(this.getCode(), this.getName(), this.getCredit()); // creates grad course object
+            }
+            courseDataSet.add(temp); // adds to the set of course data
             hashMap.put(student, courseDataSet); // adds the new student to the hashmap with this course
             students.add(student); //adds to the set of students
         }
@@ -173,7 +195,7 @@ public class CourseData {
 
     public Set<CourseData> getCourseOfStudent(Student student){
         if(hashMap.containsKey(student) && !hashMap.get(student).isEmpty()){
-            return hashMap.get(student);
+            return new HashSet<>(hashMap.get(student)); // we cannot let a user make any changes to course data set by return static value
         }else{
             return null;
         }

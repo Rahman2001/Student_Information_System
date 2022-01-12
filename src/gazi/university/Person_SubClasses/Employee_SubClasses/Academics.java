@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Academics extends Employee {
+public abstract class Academics extends Employee {
     private static final HashMap<Academics, Set<CourseData>> assignmentByEmployee = new HashMap<>();
 
     public Academics(String identity_no, String name, String registry_number){

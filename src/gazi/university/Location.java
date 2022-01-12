@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Location {
+public abstract class Location {
     private String identifier;
     private String address;
     private double space;

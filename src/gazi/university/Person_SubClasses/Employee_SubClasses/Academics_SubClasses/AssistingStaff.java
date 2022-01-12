@@ -3,7 +3,7 @@ package gazi.university.Person_SubClasses.Employee_SubClasses.Academics_SubClass
 import gazi.university.Location_SubClasses.Lab;
 import gazi.university.Person_SubClasses.Employee_SubClasses.Academics;
 
-public class AssistingStaff extends Academics {
+public abstract class AssistingStaff extends Academics {
     private Lab lab ;
 
     public AssistingStaff(String identity_no, String name, String registry_number){
