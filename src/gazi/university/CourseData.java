@@ -4,6 +4,7 @@ import gazi.university.CourseData_SubClasses.Grad_CourseData;
 import gazi.university.CourseData_SubClasses.Undergrad_CourseData;
 import gazi.university.Person_SubClasses.Employee_SubClasses.Academics_SubClasses.AssistingStaff;
 import gazi.university.Person_SubClasses.Employee_SubClasses.Academics_SubClasses.TeachingStaff;
+import gazi.university.Person_SubClasses.Employee_SubClasses.AdministrativeStaff;
 import gazi.university.Person_SubClasses.Student;
 import gazi.university.Person_SubClasses.Student_SubClasses.Undergrad_Student;
 import gazi.university.UMS.Student_Affairs_Exception.MissingGradeException;
@@ -11,6 +12,9 @@ import gazi.university.UMS.Student_Affairs_Exception.MissingGradeException;
 import java.util.*;
 
 public abstract class CourseData {
+    private static final AdministrativeStaff bashkan = new AdministrativeStaff
+            ("12345678911", "Rahman Rejepov", "1234567891123");
+
     private String code = "NaN";
     private String name = "NaN";
     private int credit = 0;
@@ -184,6 +188,9 @@ public abstract class CourseData {
                         boolean isPassed = grade >= this.getGradeCriteria();
                         if (isPassed) {
                             studentList.add(student);
+
+                            bashkan.addPerformedOperation("'getPassedStudents' operation of number: "
+                                    + hashCode() + " is successfully performed."); //adds successful operations into the list of operations
                         }
                     } catch (MissingGradeException ex) {
                         ex.printStackTrace();

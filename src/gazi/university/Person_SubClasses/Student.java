@@ -1,15 +1,20 @@
 package gazi.university.Person_SubClasses;
 import gazi.university.CourseData;
 import gazi.university.Person;
+import gazi.university.Person_SubClasses.Employee_SubClasses.AdministrativeStaff;
 import gazi.university.UMS.Student_Affairs_Exception.CourseTypeAndStudentTypeInconsistencyException;
 import gazi.university.UMS.Parameter_Mismatch_Exception.Date_Exception.EnrollmentYearException;
 import gazi.university.UMS.Parameter_Mismatch_Exception.String_Length_Mismatch_Exception.StudentIDLengthMismatchException;
 import gazi.university.UMS.Student_Affairs_Exception.MissingGradeException;
 
+import java.lang.reflect.Method;
 import java.time.Year;
 import java.util.*;
 
 public abstract class Student extends Person {
+    private static final AdministrativeStaff bashkan = new AdministrativeStaff
+            ("12345678911", "Rahman Rejepov", "1234567891123");
+
     private String studentNumber = "NaN";
     private String studentName = "NaN";
     private Year enrollmentYear;
@@ -49,6 +54,9 @@ public abstract class Student extends Person {
             throw new StudentIDLengthMismatchException(StudentIDLengthMismatchException.class.getSimpleName());
         } else {
             this.studentNumber = number;
+
+            bashkan.addPerformedOperation("'setStudentNumber' operation of number: "
+                    + hashCode() + " is successfully performed."); //adds successful operations into the list of operations
         }
     }
 
@@ -62,6 +70,9 @@ public abstract class Student extends Person {
             throw new EnrollmentYearException(EnrollmentYearException.class.getSimpleName());
         } else {
             this.enrollmentYear = enrollmentYear;
+
+            bashkan.addPerformedOperation("'setEnrollmentYear' operation of number: "
+                    + hashCode() + " is successfully performed."); //adds successful operations into the list of operations
         }
     }
 
@@ -150,6 +161,10 @@ public abstract class Student extends Person {
         secondSemGPA = secondSemGPA / (Arrays.stream(currentCreditsArray).sum()); // second semester's GPA
         double CGPA = (firstSemGPA + secondSemGPA) / 2; // CGPA of a year
         int totalPassedCredits = this.getPassedCredits();
+
+        bashkan.addPerformedOperation("'checkGraduation' operation of number: "
+                + hashCode() + " is successfully performed."); //adds successful operations into the list of operations
+
         return (CGPA >= this.getGradeCriteria() && totalPassedCredits > this.getTotalPassedCreditsCriteria());
     }
 
@@ -228,6 +243,10 @@ public abstract class Student extends Person {
                     try {
                         gradeOfCourse = courseData.get().getGrade();
                         satisfiedCriteria = gradeOfCourse >= this.getGradeCriteria();
+
+                        bashkan.addPerformedOperation("'checkPassedCourseByName' operation of number: "
+                                + hashCode() + " is successfully performed."); //adds successful operations into the list of operations
+
                         return satisfiedCriteria;
                     }catch (MissingGradeException mge){
                         System.out.println("\nBoth list of current courses and transcript are checked, but no success!\n");
@@ -254,6 +273,10 @@ public abstract class Student extends Person {
                     try {
                         gradeOfCourse = courseData.get().getGrade(); //try to get the grade
                         satisfiedCriteria = gradeOfCourse >= this.getGradeCriteria();
+
+                        bashkan.addPerformedOperation("'checkPassedCourseByCode' operation of number: "
+                                + hashCode() + " is successfully performed."); //adds successful operations into the list of operations
+
                         return satisfiedCriteria;
                     }catch(MissingGradeException mge){ // if there is not any grade, then catch exception
                         mge.printStackTrace();

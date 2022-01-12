@@ -1,16 +1,17 @@
 package gazi.university;
 
 import gazi.university.CourseData_SubClasses.Grad_CourseData;
+import gazi.university.Person_SubClasses.Employee_SubClasses.AdministrativeStaff;
 import gazi.university.Person_SubClasses.Student_SubClasses.Grad_Student;
 
 import gazi.university.Person_SubClasses.Student_SubClasses.Grad_Student_SubClasses.Msc_Student;
-import gazi.university.Person_SubClasses.Student_SubClasses.Undergrad_Student;
 import gazi.university.UMS.Parameter_Mismatch_Exception.String_Length_Mismatch_Exception.PersonIDLengthMismatchException;
 import gazi.university.UMS.Parameter_Mismatch_Exception.String_Length_Mismatch_Exception.Person_Name_Length_Mismatch_Exception.PersonNameTooLongException;
 import gazi.university.UMS.Parameter_Mismatch_Exception.String_Length_Mismatch_Exception.Person_Name_Length_Mismatch_Exception.PersonNameTooShortException;
 import gazi.university.UMS.Student_Affairs_Exception.MissingGradeException;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -64,7 +65,14 @@ public class Main {
 
         //Testing3 of Employee classes---------------------------------------------------------
 
+        AdministrativeStaff administrativeStaff = new AdministrativeStaff("12345678911", "Rahman Rejepov",
+                "1234567891123");
+        List<String> errorList =  administrativeStaff.getErrorList();
+        System.out.println(errorList.toString() + "\n");
 
+        System.out.println();
+        List<String> performedOperations = administrativeStaff.getPerformedOperations();
+        System.out.println(performedOperations.toString());
         //-------------------------------------------------------------------------------------
     }
 }
