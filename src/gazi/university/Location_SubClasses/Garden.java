@@ -6,8 +6,8 @@ import gazi.university.Person_SubClasses.Employee_SubClasses.MaintenanceStaff;
 
 public class Garden extends Location {
 
-    public Garden(String identityNumber, String address, double space){
-        super(identityNumber, address, space);
+    public Garden(String identifier, String address, double space){
+        super(identifier, address, space);
     }
 
     public void addResponsibleOneFor(MaintenanceStaff maintenanceStaff, Location location){
